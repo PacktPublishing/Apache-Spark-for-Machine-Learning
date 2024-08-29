@@ -1,0 +1,13 @@
+from pyspark.sql import SparkSession 
+from pyspark.ml import PipelineModel 
+
+def batch_prediction_job(): 
+    spark = SparkSession.builder.appName("Batch Prediction Job").getOrCreate() 
+    model = PipelineModel.load("path/to/saved/model") 
+    data = spark.read.format("parquet".load("path/to/input/data") 
+    predictions = model.transform(data) 
+    predictions.write.format("parquet").save("path/to/save/predictions") 
+    spark.stop() 
+  
+if __name__ == "__main__": 
+    batch_prediction_job() 
